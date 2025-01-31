@@ -122,10 +122,16 @@ exports.updateGadget = async (req, res, next) => {
     const existingGadget = await prisma.gadget.findUnique({
       where: { id }
     });
+
     if (!existingGadget) {
       return next(new AppError("Gadget not found", 404));
     }
 
+    // Check if gadget is already destroyed
+    if (existingGadget.status === 'Destroyed') {
+      return next(new AppError('Cannot update a destroyed gadget', 400));
+    }
+    
     // Allowed statuses
     const allowedStatuses = ["Available", "Deployed", "Destroyed", "Decommissioned"];
     if (status && !allowedStatuses.includes(status)) {
