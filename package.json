@@ -1,0 +1,35 @@
+{
+  "name": "phoenix-imf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon --legacy-watch src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhizaik/phoenix-imf.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/abhizaik/phoenix-imf/issues"
+  },
+  "homepage": "https://github.com/abhizaik/phoenix-imf#readme",
+  "dependencies": {
+    "@prisma/client": "^6.3.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

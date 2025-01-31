@@ -1,0 +1,50 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - imf-network
+    command: npm run dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: imf_database
+      POSTGRES_USER: imf
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      # test: ["CMD-SHELL", "pg_isready -U imf"]
+      test: ["CMD-SHELL", "pg_isready -U imf -d imf_database"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - imf-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@imf.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - imf-network
+
+volumes:
+  postgres-data:
+
+networks:
+  imf-network:

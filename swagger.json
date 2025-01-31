@@ -1,0 +1,69 @@
+{
+    "openapi": "3.0.0",
+    "info": { "title": "IMF Gadget API", "version": "1.0.0" },
+    "paths": {
+      "/gadgets": {
+        "get": {
+          "summary": "Get all gadgets",
+          "parameters": [{
+            "name": "status",
+            "in": "query",
+            "schema": { "type": "string", "enum": ["Available", "Deployed", "Destroyed", "Decommissioned"] }
+          }],
+          "responses": { "200": { "description": "List of gadgets" } }
+        },
+        "post": {
+          "summary": "Create a new gadget",
+          "security": [{ "bearerAuth": [] }],
+          "responses": { "201": { "description": "Gadget created" } }
+        }
+      },
+      "/gadgets/{id}": {
+        "patch": {
+          "summary": "Update a gadget",
+          "security": [{ "bearerAuth": [] }],
+          "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+          "responses": { "200": { "description": "Gadget updated" } }
+        },
+        "delete": {
+          "summary": "Decommission a gadget",
+          "security": [{ "bearerAuth": [] }],
+          "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+          "responses": { "200": { "description": "Gadget decommissioned" } }
+        }
+      },
+      "/gadgets/{id}/self-destruct": {
+        "post": {
+          "summary": "Trigger self-destruct",
+          "security": [{ "bearerAuth": [] }],
+          "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+          "responses": { "200": { "description": "Self-destruct initiated" } }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "summary": "Authenticate user",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": { "type": "string" },
+                    "password": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": { "description": "Authentication successful" },
+            "401": { "description": "Invalid credentials" }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    }
+  }
