@@ -11,6 +11,13 @@ const app = express();
 app.use(express.json());
 app.use(successResponse);
 
+// Base route
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Impossible Missions Force Gadget Management Micro-service'
+  });
+});
+
 // Routes
 app.use('/api/v1/auth', userRoutes);
 app.use('/api/v1', gadgetRoutes);
